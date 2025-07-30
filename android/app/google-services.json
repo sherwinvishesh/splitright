@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1096429438682",
+    "project_id": "splitright-5a394",
+    "storage_bucket": "splitright-5a394.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096429438682:android:80679fec695042bcb4c7e3",
+        "android_client_info": {
+          "package_name": "com.example.splitright"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR3xOIwhcCMG6RTN5dYHXIXbOtWwT8zZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096429438682:android:d8ce0e352292b890b4c7e3",
+        "android_client_info": {
+          "package_name": "com.splitright"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR3xOIwhcCMG6RTN5dYHXIXbOtWwT8zZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
