@@ -1,3 +1,4 @@
+// splitright/lib/auth-files/login_page.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'signup_step1.dart';
@@ -44,21 +45,36 @@ class _LoginPageState extends State<LoginPage> {
           errorMessage =
               'Network error. Please check your internet connection and try again.';
           break;
+        case 'keychain-error':
+        case 'auth/keychain-error':
+          errorMessage =
+              'Keychain access error. Please try restarting the app.';
+          break;
         default:
           errorMessage = 'An error occurred: ${e.message}';
+          print('Firebase Auth Error Code: ${e.code}');
+          print('Firebase Auth Error Message: ${e.message}');
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(errorMessage),
-          backgroundColor: Colors.red,
+          content: Text(
+            errorMessage,
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red[700],
+          duration: Duration(seconds: 5),
         ),
       );
     } catch (e) {
+      print('General Auth Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('An unexpected error occurred: $e'),
-          backgroundColor: Colors.red,
+          content: Text(
+            'An unexpected error occurred: $e',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red[700],
         ),
       );
     }
@@ -79,12 +95,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF000000), // Pitch black
       appBar: AppBar(
-        title: Text('Sign In'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        title: Text(
+          'Sign In',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF000000), // Pitch black
+        elevation: 0,
       ),
-      body: Padding(
+      body: Container(
+        color: Color(0xFF000000), // Pitch black
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -99,10 +120,22 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 32),
               TextFormField(
                 controller: _emailController,
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email),
+                  labelStyle: TextStyle(color: Colors.white70),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white54),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white54),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  prefixIcon: Icon(Icons.email, color: Colors.white70),
+                  filled: true,
+                  fillColor: Color(0xFF111111),
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -119,10 +152,22 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
+                  labelStyle: TextStyle(color: Colors.white70),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white54),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white54),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  prefixIcon: Icon(Icons.lock, color: Colors.white70),
+                  filled: true,
+                  fillColor: Color(0xFF111111),
                 ),
                 obscureText: true,
                 validator: (value) {
@@ -141,6 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
+                    disabledBackgroundColor: Colors.grey[800],
                   ),
                   child: _isLoading
                       ? Row(
@@ -155,12 +201,15 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             SizedBox(width: 12),
-                            Text('Please wait...'),
+                            Text(
+                              'Please wait...',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ],
                         )
                       : Text(
                           'Sign In',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                 ),
               ),

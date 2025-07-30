@@ -1,10 +1,13 @@
+// splitright/lib/auth-files/user_service.dart
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserService {
+  // In-memory storage for macOS (to avoid keychain issues)
+  static Map<String, Map<String, String>> _userDetails = {};
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Save user details to Firestore (secure cloud database)
   static Future<void> saveUserDetails(
     String uid,
     String firstName,
@@ -13,54 +16,72 @@ class UserService {
     String displayName,
     String email,
   ) async {
-    try {
-      await _firestore.collection('users').doc(uid).set({
-        'firstName': firstName,
-        'lastName': lastName,
-        'username': username,
-        'displayName': displayName,
-        'email': email,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      print('Error saving user details: $e');
-      throw e;
-    }
-  }
+    final userInfo = {
+      'firstName': firstName,
+      'lastName': lastName,
+      'username': username,
+      'displayName': displayName,
+      'email': email,
+    };
 
-  // Get user details from Firestore
-  static Future<Map<String, dynamic>?> getUserDetails(String uid) async {
-    try {
-      DocumentSnapshot doc =
-          await _firestore.collection('users').doc(uid).get();
-      if (doc.exists) {
-        return doc.data() as Map<String, dynamic>?;
+    if (defaultTargetPlatform == TargetPlatform.macOS) {
+      // Use memory storage for macOS
+      _userDetails[uid] = userInfo;
+      print('macOS: Saved user details in memory for $displayName');
+    } else {
+      try {
+        // Use Firestore for other platforms
+        await _firestore.collection('users').doc(uid).set({
+          ...userInfo,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+        // Also cache in memory as backup
+        _userDetails[uid] = userInfo;
+      } catch (e) {
+        print('Firestore error, using memory storage: $e');
+        _userDetails[uid] = userInfo;
       }
-      return null;
-    } catch (e) {
-      print('Error getting user details: $e');
-      return null;
     }
   }
 
-  // Get current user's display name
+  static Future<Map<String, dynamic>?> getUserDetails(String uid) async {
+    if (defaultTargetPlatform == TargetPlatform.macOS) {
+      return _userDetails[uid];
+    } else {
+      try {
+        DocumentSnapshot doc =
+            await _firestore.collection('users').doc(uid).get();
+        if (doc.exists) {
+          final data = doc.data() as Map<String, dynamic>?;
+          // Cache in memory
+          if (data != null) {
+            _userDetails[uid] =
+                data.map((key, value) => MapEntry(key, value.toString()));
+          }
+          return data;
+        }
+        return _userDetails[uid]; // Fallback to memory
+      } catch (e) {
+        print('Firestore error, using memory storage: $e');
+        return _userDetails[uid];
+      }
+    }
+  }
+
   static Future<String?> getCurrentUserDisplayName() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final userDetails = await getUserDetails(user.uid);
-      return userDetails?['displayName'];
+      if (defaultTargetPlatform == TargetPlatform.macOS) {
+        return _userDetails[user.uid]?['displayName'];
+      } else {
+        final userDetails = await getUserDetails(user.uid);
+        return userDetails?['displayName'];
+      }
     }
     return null;
   }
 
-  // Update user profile
-  static Future<void> updateUserProfile(
-      String uid, Map<String, dynamic> updates) async {
-    try {
-      await _firestore.collection('users').doc(uid).update(updates);
-    } catch (e) {
-      print('Error updating user profile: $e');
-      throw e;
-    }
+  static String? getUserDisplayName(String uid) {
+    return _userDetails[uid]?['displayName'];
   }
 }

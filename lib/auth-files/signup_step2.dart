@@ -1,3 +1,4 @@
+// splitright/lib/auth-files/signup_step2.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'user_service.dart';
@@ -65,8 +66,10 @@ class _SignUpStep2State extends State<SignUpStep2> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-              'Account created! Please check your email to verify your account.'),
-          backgroundColor: Colors.green,
+            'Account created! Please check your email to verify your account.',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green[700],
           duration: Duration(seconds: 5),
         ),
       );
@@ -95,15 +98,21 @@ class _SignUpStep2State extends State<SignUpStep2> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(errorMessage),
-          backgroundColor: Colors.red,
+          content: Text(
+            errorMessage,
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red[700],
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('An unexpected error occurred: $e'),
-          backgroundColor: Colors.red,
+          content: Text(
+            'An unexpected error occurred: $e',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red[700],
         ),
       );
     }
@@ -121,11 +130,15 @@ class _SignUpStep2State extends State<SignUpStep2> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Color(0xFF000000), // Pitch black
           title: Row(
             children: [
               Icon(Icons.email, color: Colors.blue),
               SizedBox(width: 10),
-              Text('Verify Your Email'),
+              Text(
+                'Verify Your Email',
+                style: TextStyle(color: Colors.white),
+              ),
             ],
           ),
           content: Column(
@@ -133,7 +146,7 @@ class _SignUpStep2State extends State<SignUpStep2> {
             children: [
               Text(
                 'We\'ve sent a verification email to:',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16, color: Colors.white),
               ),
               SizedBox(height: 8),
               Text(
@@ -147,6 +160,7 @@ class _SignUpStep2State extends State<SignUpStep2> {
               Text(
                 'Please check your email and click the verification link to complete your registration.',
                 textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white70),
               ),
             ],
           ),
@@ -157,15 +171,30 @@ class _SignUpStep2State extends State<SignUpStep2> {
                 try {
                   await _auth.currentUser?.sendEmailVerification();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Verification email sent again!')),
+                    SnackBar(
+                      content: Text(
+                        'Verification email sent again!',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.green[700],
+                    ),
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error sending email: $e')),
+                    SnackBar(
+                      content: Text(
+                        'Error sending email: $e',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red[700],
+                    ),
                   );
                 }
               },
-              child: Text('Resend Email'),
+              child: Text(
+                'Resend Email',
+                style: TextStyle(color: Colors.blue),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
@@ -173,6 +202,10 @@ class _SignUpStep2State extends State<SignUpStep2> {
                 Navigator.of(context)
                     .popUntil((route) => route.isFirst); // Go to login
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+              ),
               child: Text('Continue to Login'),
             ),
           ],
@@ -184,12 +217,18 @@ class _SignUpStep2State extends State<SignUpStep2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF000000), // Pitch black
       appBar: AppBar(
-        title: Text('Sign Up - Step 2'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        title: Text(
+          'Sign Up - Step 2',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF000000), // Pitch black
+        iconTheme: IconThemeData(color: Colors.white),
+        elevation: 0,
       ),
-      body: Padding(
+      body: Container(
+        color: Color(0xFF000000), // Pitch black
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -206,8 +245,9 @@ class _SignUpStep2State extends State<SignUpStep2> {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
+                    color: Color(0xFF111111),
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.white24),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +256,7 @@ class _SignUpStep2State extends State<SignUpStep2> {
                         'Creating account for:',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey[600],
+                          color: Colors.white70,
                         ),
                       ),
                       SizedBox(height: 8),
@@ -225,21 +265,21 @@ class _SignUpStep2State extends State<SignUpStep2> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue[800],
+                          color: Colors.blue,
                         ),
                       ),
                       Text(
                         'Email: ${widget.email}',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey[600],
+                          color: Colors.white70,
                         ),
                       ),
                       Text(
                         'Display name: ${widget.displayName}',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey[600],
+                          color: Colors.white70,
                         ),
                       ),
                     ],
@@ -248,20 +288,35 @@ class _SignUpStep2State extends State<SignUpStep2> {
                 SizedBox(height: 32),
                 TextFormField(
                   controller: _passwordController,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock),
+                    labelStyle: TextStyle(color: Colors.white70),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    prefixIcon: Icon(Icons.lock, color: Colors.white70),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword
-                          ? Icons.visibility
-                          : Icons.visibility_off),
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.white70,
+                      ),
                       onPressed: () {
                         setState(() {
                           _obscurePassword = !_obscurePassword;
                         });
                       },
                     ),
+                    filled: true,
+                    fillColor: Color(0xFF111111),
                   ),
                   obscureText: _obscurePassword,
                   validator: (value) {
@@ -277,20 +332,35 @@ class _SignUpStep2State extends State<SignUpStep2> {
                 SizedBox(height: 16),
                 TextFormField(
                   controller: _confirmPasswordController,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock_outline),
+                    labelStyle: TextStyle(color: Colors.white70),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    prefixIcon: Icon(Icons.lock_outline, color: Colors.white70),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscureConfirmPassword
-                          ? Icons.visibility
-                          : Icons.visibility_off),
+                      icon: Icon(
+                        _obscureConfirmPassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.white70,
+                      ),
                       onPressed: () {
                         setState(() {
                           _obscureConfirmPassword = !_obscureConfirmPassword;
                         });
                       },
                     ),
+                    filled: true,
+                    fillColor: Color(0xFF111111),
                   ),
                   obscureText: _obscureConfirmPassword,
                   validator: (value) {
@@ -312,6 +382,7 @@ class _SignUpStep2State extends State<SignUpStep2> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
+                      disabledBackgroundColor: Colors.grey[800],
                     ),
                     child: _isLoading
                         ? Row(
@@ -326,17 +397,21 @@ class _SignUpStep2State extends State<SignUpStep2> {
                                 ),
                               ),
                               SizedBox(width: 12),
-                              Text('Creating Account...'),
+                              Text(
+                                'Creating Account...',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ],
                           )
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.check_circle),
+                              Icon(Icons.check_circle, color: Colors.white),
                               SizedBox(width: 8),
                               Text(
                                 'Create Account',
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white),
                               ),
                             ],
                           ),

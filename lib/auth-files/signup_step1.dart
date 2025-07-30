@@ -1,3 +1,4 @@
+// splitright/lib/auth-files/signup_step1.dart
 import 'package:flutter/material.dart';
 import 'signup_step2.dart';
 
@@ -49,12 +50,18 @@ class _SignUpStep1State extends State<SignUpStep1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF000000), // Pitch black
       appBar: AppBar(
-        title: Text('Sign Up - Step 1'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        title: Text(
+          'Sign Up - Step 1',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF000000), // Pitch black
+        iconTheme: IconThemeData(color: Colors.white),
+        elevation: 0,
       ),
-      body: Padding(
+      body: Container(
+        color: Color(0xFF000000), // Pitch black
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -70,10 +77,22 @@ class _SignUpStep1State extends State<SignUpStep1> {
                 SizedBox(height: 32),
                 TextFormField(
                   controller: _emailController,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
+                    labelStyle: TextStyle(color: Colors.white70),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    prefixIcon: Icon(Icons.email, color: Colors.white70),
+                    filled: true,
+                    fillColor: Color(0xFF111111),
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
@@ -90,10 +109,22 @@ class _SignUpStep1State extends State<SignUpStep1> {
                 SizedBox(height: 16),
                 TextFormField(
                   controller: _firstNameController,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'First Name',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.person),
+                    labelStyle: TextStyle(color: Colors.white70),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    prefixIcon: Icon(Icons.person, color: Colors.white70),
+                    filled: true,
+                    fillColor: Color(0xFF111111),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -105,10 +136,23 @@ class _SignUpStep1State extends State<SignUpStep1> {
                 SizedBox(height: 16),
                 TextFormField(
                   controller: _lastNameController,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Last Name',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.person_outline),
+                    labelStyle: TextStyle(color: Colors.white70),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    prefixIcon:
+                        Icon(Icons.person_outline, color: Colors.white70),
+                    filled: true,
+                    fillColor: Color(0xFF111111),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -120,10 +164,23 @@ class _SignUpStep1State extends State<SignUpStep1> {
                 SizedBox(height: 16),
                 TextFormField(
                   controller: _usernameController,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Username',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.alternate_email),
+                    labelStyle: TextStyle(color: Colors.white70),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white54),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    prefixIcon:
+                        Icon(Icons.alternate_email, color: Colors.white70),
+                    filled: true,
+                    fillColor: Color(0xFF111111),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -140,8 +197,9 @@ class _SignUpStep1State extends State<SignUpStep1> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(color: Colors.white54),
                     borderRadius: BorderRadius.circular(8),
+                    color: Color(0xFF111111),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,28 +209,44 @@ class _SignUpStep1State extends State<SignUpStep1> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[700],
+                          color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 12),
                       DropdownButtonFormField<String>(
                         value: _selectedDisplayName,
+                        dropdownColor: Color(0xFF111111),
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.badge),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.blue, width: 2),
+                          ),
+                          prefixIcon: Icon(Icons.badge, color: Colors.white70),
+                          filled: true,
+                          fillColor: Color(0xFF222222),
                         ),
                         items: [
                           DropdownMenuItem(
                             value: 'firstName',
-                            child: Text('First Name'),
+                            child: Text('First Name',
+                                style: TextStyle(color: Colors.white)),
                           ),
                           DropdownMenuItem(
                             value: 'lastName',
-                            child: Text('Last Name'),
+                            child: Text('Last Name',
+                                style: TextStyle(color: Colors.white)),
                           ),
                           DropdownMenuItem(
                             value: 'username',
-                            child: Text('Username'),
+                            child: Text('Username',
+                                style: TextStyle(color: Colors.white)),
                           ),
                         ],
                         onChanged: (value) {
@@ -199,10 +273,10 @@ class _SignUpStep1State extends State<SignUpStep1> {
                       children: [
                         Text(
                           'Next Step',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                         SizedBox(width: 8),
-                        Icon(Icons.arrow_forward),
+                        Icon(Icons.arrow_forward, color: Colors.white),
                       ],
                     ),
                   ),
