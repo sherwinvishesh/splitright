@@ -73,72 +73,29 @@ class _HomeTabState extends State<HomeTab> {
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Color(0xFF111111), // Very dark gray
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.white12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            spreadRadius: 2,
-                            blurRadius: 8,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.waving_hand,
-                            size: 48,
-                            color: Colors.orange,
-                          ),
-                          SizedBox(height: 16),
-                          Text(
-                            'Hi, $displayName!',
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Welcome back to SplitRight',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ],
-                      ),
+                    Icon(
+                      Icons.home,
+                      size: 80,
+                      color: Colors.blue,
                     ),
-                    SizedBox(height: 32),
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      margin: EdgeInsets.symmetric(horizontal: 32),
-                      decoration: BoxDecoration(
-                        color: Color(0xFF001100), // Very dark green
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.green.shade800),
+                    SizedBox(height: 20),
+                    Text(
+                      'Hello, $displayName',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.security, color: Colors.green),
-                          SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              'Your data is securely stored with Firebase!',
-                              style: TextStyle(
-                                color: Colors.green.shade300,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ],
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Welcome to SplitRight',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white70,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
